@@ -273,3 +273,20 @@ a.cd:hover{transform:translateY(-3px);border-color:rgba(29,78,158,.4);box-shadow
  .fixcta .btn{width:100%;justify-content:center;padding:15px 20px;font-size:14.5px;box-shadow:0 14px 28px -14px rgba(20,48,106,.7)}}
 @media print{.hd,.fixcta,.side,.consult{display:none}body{background:#fff}}
 .ft-credit{margin-top:10px;font-size:11px;color:var(--mute)}
+/* 2026-10-18 通し確認の指摘対応 */
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:14px}.cta-row .btn{white-space:normal}.cta-sub{font-size:12.5px;line-height:1.7;color:var(--mute)}
+.ph-in .cta-row{margin-top:16px}
+.fold{background:rgba(255,255,255,.92);border:1px solid var(--bd);border-radius:16px;overflow:hidden}
+.fold>summary{cursor:pointer;list-style:none;padding:14px 46px 14px 18px;font:500 14px/1.6 var(--sans);color:var(--navy);position:relative;min-height:44px}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::after{content:"";position:absolute;right:20px;top:50%;width:8px;height:8px;margin-top:-6px;border-right:1.5px solid var(--deep);border-bottom:1.5px solid var(--deep);transform:rotate(45deg);transition:transform .2s}
+.fold[open]>summary::after{transform:rotate(-135deg);margin-top:-2px}
+.fold-in{padding:4px 10px 14px;display:grid;gap:12px}
+.rk-entry{margin-top:14px;font-size:14px}.rk-entry a{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--deep);text-decoration:underline;text-underline-offset:4px}
+@media (max-width:640px){
+ .tw.ns table{font-size:12.5px;line-height:1.6}.tw.ns th,.tw.ns td{padding:9px 5px}.tw.ns thead th{font-size:11.5px;letter-spacing:0}.tw.ns tbody td:first-child{width:auto;white-space:nowrap}
+ .tw.ns th:first-child,.tw.ns td:first-child{padding-left:10px}
+ .crumb a{display:inline-block;padding:11px 0}.toc a{padding:11px 8px}.fc li a{padding:11px 0}.fm a{display:inline-block;padding:12px 0}.ft-bot a{display:inline-block;padding:11px 0}
+ .cta-row .btn{width:100%;justify-content:center}
+ .tw.hm3 th:nth-child(3),.tw.hm3 td:nth-child(3),.tw.hm5 th:nth-child(5),.tw.hm5 td:nth-child(5){display:none}
+ .tw.ns td{white-space:nowrap}.tw.ns td:first-child{width:auto}}

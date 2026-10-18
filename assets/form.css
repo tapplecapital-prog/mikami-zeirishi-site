@@ -1,0 +1,114 @@
+/* 相談フォーム（/contact/ と /contact/thanks/ だけで読む）。色・書体は site.css の変数に合わせる */
+.cf{--err:#B42318;--req:#A82A46;--fbd:rgba(29,78,158,.34);display:grid;gap:18px;max-width:46em}
+.cf p{max-width:none}
+.cf>*,.cf-form>*,.cf .cf-box>*{min-width:0}
+.cf .btn{white-space:normal;text-align:center;line-height:1.5}
+.cf-form{display:grid;gap:26px}
+.cf .cf-form,.cf .cf-box,.cf .cf-sum,.cf .fld{scroll-margin-top:100px}
+.cf input,.cf textarea{scroll-margin-top:150px;scroll-margin-bottom:90px}
+.cf .cf-lead{font-size:13.5px;line-height:1.8;color:var(--mute)}
+.cf .req,.cf .opt{display:inline-block;margin:0 6px 0 8px;padding:0 8px;border-radius:99px;font:500 11px/1.75 var(--sans);letter-spacing:.06em;vertical-align:1px;white-space:nowrap}
+.cf .req{color:var(--req);border:1px solid var(--req);background:#fff}
+.cf .opt{color:var(--mute);border:1px solid var(--line);background:rgba(255,255,255,.7)}
+.cf .cf-lead .req,.cf .cf-lead .opt{margin:0 2px}
+
+/* 項目 */
+.cf .fld{display:block;min-width:0;margin:0;padding:0;border:0}
+.cf .fl-l{display:block;padding:0;margin:0 0 6px;font:500 15.5px/1.6 var(--sans);color:var(--navy);letter-spacing:.03em}
+.cf .hint{margin:0 0 10px;font-size:13px;line-height:1.85;color:var(--mute)}
+.cf .in{display:block;width:100%;min-height:52px;margin:0;padding:12px 16px;font:400 16px/1.6 var(--sans);letter-spacing:.02em;color:var(--ink);
+ background:#fff;border:1px solid var(--fbd);border-radius:14px;box-shadow:inset 0 1px 2px rgba(20,40,75,.06);
+ -webkit-appearance:none;appearance:none;transition:border-color .15s,box-shadow .15s}
+.cf .in:hover{border-color:rgba(29,78,158,.55)}
+.cf .in:focus{outline:none;border-color:var(--deep);box-shadow:0 0 0 3px rgba(29,78,158,.2)}
+.cf textarea.in{min-height:190px;resize:vertical;line-height:1.85}
+.cf textarea[readonly]{background:#F7FAFE;font-size:14px}
+.cf .num-w{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--navy)}
+.cf .num-w .in{width:7em;text-align:right}
+.cf .cnt{margin:6px 0 0;font:400 12px/1.6 var(--en);color:var(--mute);text-align:right}
+.cf .cnt.over{color:var(--err);font-weight:500}
+
+/* 選択肢（ラジオボタンを、押しやすい大きさの札にする。入力そのものは隠さず透明にして重ねる） */
+.cf .chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cf .chip{position:relative;display:block;cursor:pointer;min-width:0}
+.cf .chip input,.cf .chk input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:1}
+.cf .chip>span{display:flex;flex-direction:column;justify-content:center;gap:1px;min-height:54px;height:100%;padding:9px 12px 9px 42px;position:relative;
+ border-radius:14px;background:#fff;border:1px solid var(--fbd);transition:border-color .15s,background .15s,box-shadow .15s}
+.cf .chip>span::before{content:"";position:absolute;left:14px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;border:1.5px solid rgba(29,78,158,.55);background:#fff;transition:border-width .15s,border-color .15s}
+.cf .chip b{font:500 14.5px/1.5 var(--sans);color:var(--ink)}
+.cf .chip small{font-size:11.5px;line-height:1.5;color:var(--mute)}
+.cf .chip:hover span{border-color:rgba(29,78,158,.6)}
+.cf .chip input:checked+span{background:#EEF4FD;border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.cf .chip input:checked+span::before{border:5.5px solid var(--navy)}
+.cf .chip input:checked+span b{color:var(--navy)}
+.cf .chip input:focus-visible+span,.cf .chk input:focus-visible+span{outline:2px solid var(--deep);outline-offset:2px}
+.cf .chk{position:relative;display:block;cursor:pointer}
+.cf .chk>span{display:block;position:relative;min-height:54px;padding:14px 16px 14px 50px;border-radius:14px;background:#fff;border:1px solid var(--fbd);font:500 15px/1.65 var(--sans);color:var(--ink)}
+.cf .chk>span::before{content:"";position:absolute;left:16px;top:16px;width:20px;height:20px;border-radius:6px;border:1.5px solid rgba(29,78,158,.6);background:#fff}
+.cf .chk input:checked+span{background:#EEF4FD;border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.cf .chk input:checked+span::before{background:var(--navy) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/14px no-repeat;border-color:var(--navy)}
+
+/* 誤りの表示（色だけに頼らず、文で原因と直し方を出す） */
+.cf .fe{display:flex;gap:8px;align-items:flex-start;margin:8px 0 0;font-size:13.5px;line-height:1.7;font-weight:500;color:var(--err)}
+.cf .fe::before{content:"!";flex:none;width:18px;height:18px;margin-top:2px;border-radius:50%;background:var(--err);color:#fff;font:700 12px/18px var(--en);text-align:center}
+.cf .fld.err .in,.cf .fld.err .chip>span,.cf .fld.err .chk>span{border-color:var(--err)}
+.cf .fld.err .in{box-shadow:0 0 0 1px var(--err)}
+.cf .cf-sum{padding:16px 18px;border-radius:14px;background:#FDF3F2;border:1px solid #EFB7B0;color:#7A1A12;font-size:14px;line-height:1.8}
+.cf .cf-sum:focus{outline:2px solid var(--err);outline-offset:2px}
+.cf .cf-sum b{display:block;margin-bottom:4px}
+.cf .cf-sum a{color:#7A1A12;text-decoration:underline;text-underline-offset:3px}
+.cf .cf-sum li{position:relative;padding-left:14px}
+.cf .cf-sum li::before{content:"";position:absolute;left:0;top:.8em;width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* 個人情報の取り扱い */
+.cf .cf-pv{padding:18px 20px;border-radius:16px;background:var(--tint);border:1px solid var(--bd);font-size:13.5px;line-height:1.9;display:grid;gap:8px}
+.cf .cf-pv p{font-size:13.5px;line-height:1.9}
+.cf .cf-pv .pv-h{font:600 14.5px/1.6 var(--sans);color:var(--navy)}
+.cf .cf-pv ul li{position:relative;padding-left:16px}
+.cf .cf-pv ul li::before{content:"";position:absolute;left:3px;top:.85em;width:5px;height:5px;border-radius:50%;background:var(--deep)}
+.cf .pv-a{display:inline-block;margin-left:6px;color:var(--deep);text-decoration:underline;text-underline-offset:3px;padding:6px 0}
+
+/* 隠し項目（人には見せない） */
+.cf .cf-hp{position:absolute!important;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+
+/* ボタンと状態 */
+.cf .cf-act{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cf .cf-act .btn{min-height:54px;padding:14px 28px;font-size:15px;justify-content:center}
+.cf .btn[disabled]{opacity:.55;cursor:progress}
+.cf .btn[disabled]:hover{background:var(--navy);color:#fff}
+.cf .cf-after{font-size:13px;line-height:1.85;color:var(--mute);margin-top:-10px}
+.cf .cf-box{display:grid;gap:14px;padding:clamp(18px,2.4vw,28px);border-radius:18px;background:#fff;border:1px solid var(--bd);box-shadow:0 16px 32px -26px rgba(29,78,158,.5)}
+.cf .cf-box:focus{outline:none}
+.cf .cf-box h3{font:600 18px/1.6 var(--mincho);color:var(--navy);letter-spacing:.05em}
+.cf .cf-box p{font-size:14.5px;line-height:1.9}
+.cf .cf-dl{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr);border-top:1px solid var(--line);margin:0}
+.cf .cf-dl dt,.cf .cf-dl dd{margin:0;padding:10px 4px;border-bottom:1px solid var(--line);font-size:14px;line-height:1.8}
+.cf .cf-dl dt{color:var(--mute);font-weight:500}
+.cf .cf-dl dd{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink)}
+.cf .cf-st:empty{display:none}
+.cf .cf-st{padding:14px 16px;border-radius:12px;background:var(--tint);font-size:14px;line-height:1.8}
+.cf .cf-st.bad{background:#FDF3F2;border:1px solid #EFB7B0;color:#7A1A12}
+.cf .cf-copied{font-size:13px;color:var(--deep)}
+.cf .cf-ns{padding:16px 18px;border-radius:14px;background:#FFF8E6;border:1px solid #F0D58A;font-size:14px;line-height:1.85;display:grid;gap:12px}
+
+/* JavaScript が動かない環境では、メールの作成画面を開く方式のフォームは出さない（メールの案内を読んでもらう） */
+html:not(.js) .cf-form.is-mail{display:none}
+
+/* 送信後の画面の受付番号 */
+.cf-rcpt{padding:14px 18px;border-radius:14px;background:#EEF4FD;border:1px solid var(--line);font-size:15px;color:var(--navy)}
+.cf-rcpt b{font:600 16px var(--en);letter-spacing:.04em}
+
+@media (min-width:761px){.cf .chips.c3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* 相談の種類は補足があるので、スマホでは1列にして読みやすくする */
+@media (max-width:760px){.cf .chips.one{grid-template-columns:minmax(0,1fr)}
+ .cf .chips.one .chip>span{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:baseline;align-content:center;gap:2px 10px}}
+@media (max-width:640px){
+ .cf .cf-act .btn{width:100%}
+ .cf .cf-dl{grid-template-columns:minmax(0,1fr)}
+ .cf .cf-dl dt{border-bottom:0;padding-bottom:0}
+ .cf .cf-dl dd{padding-top:2px}
+ .cf .chip>span{padding-left:40px}
+}
+@media (max-width:360px){.cf .chips{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.cf *{transition:none!important}}
+@media print{.cf-form .cf-act,.cf-hp{display:none}}
