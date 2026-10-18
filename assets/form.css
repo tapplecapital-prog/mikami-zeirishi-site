@@ -99,7 +99,7 @@ html:not(.js) .cf-form.is-mail{display:none}
 .cf-rcpt b{font:600 16px var(--en);letter-spacing:.04em}
 
 @media (min-width:761px){.cf .chips.c3{grid-template-columns:repeat(3,minmax(0,1fr))}}
-/* 相談の種類は補足があるので、スマホでは1列にして読みやすくする */
+/* 選択肢が多いので、スマホでは1列にして読みやすくする */
 @media (max-width:760px){.cf .chips.one{grid-template-columns:minmax(0,1fr)}
  .cf .chips.one .chip>span{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:baseline;align-content:center;gap:2px 10px}}
 @media (max-width:640px){
@@ -112,3 +112,6 @@ html:not(.js) .cf-form.is-mail{display:none}
 @media (max-width:360px){.cf .chips{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){.cf *{transition:none!important}}
 @media print{.cf-form .cf-act,.cf-hp{display:none}}
+
+/* 送信ボタンの下の一文（簡素化後） */
+.cf .cf-sub{margin:-14px 0 0;font-size:13px;line-height:1.8;color:var(--mute)}

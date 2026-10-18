@@ -25,11 +25,11 @@
   var sendBtn = d.getElementById('cf-send');
   var mailed = d.getElementById('cf-mailed');
   var t0 = Date.now();
-  var KEY = 'cf-draft-v1';
-  var ORDER = ['name', 'email', 'type', 'buildings', 'entity', 'source', 'consent', 'message'];
-  var LAB = { name: 'お名前', email: 'メールアドレス', type: '相談の種類', buildings: '賃貸物件の棟数', entity: '個人か法人か',
-    source: '当事務所を知ったきっかけ', consent: '個人情報の利用目的への同意', message: '相談の内容' };
-  var FOCUS = { name: 'cf-name', email: 'cf-email', type: null, buildings: 'cf-bld', entity: null, source: null, consent: 'cf-consent', message: 'cf-msg' };
+  var KEY = 'cf-draft-v2';
+  var ORDER = ['name', 'email', 'when', 'message', 'source', 'consent'];
+  var LAB = { name: 'お名前', email: 'メールアドレス', when: 'ご希望の日時・時間帯', message: 'お話ししたいこと',
+    source: '当事務所を知ったきっかけ', consent: '個人情報の取り扱いへの同意' };
+  var FOCUS = { name: 'cf-name', email: 'cf-email', when: 'cf-when', message: 'cf-msg', source: null, consent: 'cf-consent' };
   var EMAIL_RE = /^[A-Za-z0-9.!#$%&'*+\/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/;
 
   f.noValidate = true;
@@ -49,7 +49,6 @@
     var v = String(x.value || '');
     if (k === 'message') return v.replace(/\r\n?/g, '\n').replace(/^\s+|\s+$/g, '');
     if (k === 'email') return nfkc(v).replace(/\s/g, '');
-    if (k === 'buildings') return nfkc(v).replace(/\s|棟/g, '');
     return v.replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
   }
 
@@ -65,21 +64,17 @@
         if (!v) return 'メールアドレスを入れてください。返信はこのアドレスにお送りします。';
         if (v.length > 254 || !EMAIL_RE.test(v)) return 'メールアドレスの形を確かめてください（例：name@example.com）。';
         return '';
-      case 'type': return v ? '' : '相談の種類を、1つ選んでください。';
-      case 'source': return v ? '' : '当事務所を知ったきっかけを、1つ選んでください。';
       case 'consent': return v ? '' : '個人情報の取り扱いをお読みいただき、同意の欄にチェックを入れてください。';
-      case 'buildings': return (!v || /^\d{1,3}$/.test(v)) ? '' : '棟数は数字で入れてください（物件をお持ちでない場合は 0）。';
-      case 'message':
-        if (!v) return '相談の内容を入れてください。箇条書きで構いません。';
-        if (v.length > 2000) return '相談の内容は2,000文字以内でお願いします（いまは ' + v.length + ' 文字）。';
-        return '';
+      case 'when': return v.length > 100 ? 'ご希望の日時・時間帯は100文字以内でお願いします（いまは ' + v.length + ' 文字）。' : '';
+      case 'message': return v.length > 2000 ? 'お話ししたいことは2,000文字以内でお願いします（いまは ' + v.length + ' 文字）。' : '';
+      case 'source': return '';
     }
     return '';
   }
 
   function show(k, msg) {
     var fld = f.querySelector('[data-f="' + k + '"]');
-    var p = d.getElementById('cf-' + (k === 'buildings' ? 'bld' : k === 'message' ? 'msg' : k) + '-e');
+    var p = d.getElementById('cf-' + (k === 'message' ? 'msg' : k) + '-e');
     if (!fld || !p) return;
     fld.classList.toggle('err', !!msg);
     p.textContent = msg || '';
@@ -119,12 +114,12 @@
 
   // 入力が終わったところ（離れたとき）で確かめる。いちど誤りを出した欄は、直したらすぐ消す
   var touched = {};
-  ['name', 'email', 'buildings', 'message'].forEach(function (k) {
+  ['name', 'email', 'when', 'message'].forEach(function (k) {
     var x = el(k);
     x.addEventListener('blur', function () { if (val(k) || touched[k]) { touched[k] = true; show(k, check(k)); } });
     x.addEventListener('input', function () { if (touched[k] && !check(k)) show(k, ''); });
   });
-  ['type', 'entity', 'source', 'consent'].forEach(function (k) {
+  ['source', 'consent'].forEach(function (k) {
     var x = el(k), list = x.length && !x.tagName ? x : [x];
     for (var i = 0; i < list.length; i++) list[i].addEventListener('change', function () { show(k, check(k)); });
   });
@@ -165,8 +160,7 @@
     dl.innerHTML = '';
     ORDER.forEach(function (k) {
       var v = val(k);
-      if (k === 'buildings') v = v === '' ? '記入なし' : v + '棟';
-      if (k === 'entity' && !v) v = '記入なし';
+      if (!v) v = '記入なし';
       var dt = d.createElement('dt'), dd = d.createElement('dd');
       dt.textContent = LAB[k]; dd.textContent = v;
       dl.appendChild(dt); dl.appendChild(dd);
@@ -265,20 +259,17 @@
 
   // メールの作成画面を開く（送信先が無いあいだ、または送信に失敗したとき）
   function mailText() {
-    var lines = ['事務所サイトの相談フォームの項目で、相談します。', ''];
+    var lines = ['事務所サイトの相談フォームから、15分の無料相談を申し込みます。', ''];
     ORDER.forEach(function (k) {
       if (k === 'message') return;
-      var v = val(k);
-      if (k === 'buildings') v = v === '' ? '記入なし' : v + '棟';
-      if (k === 'entity' && !v) v = '記入なし';
-      lines.push(LAB[k] + '：' + v);
+      lines.push(LAB[k] + '：' + (val(k) || '記入なし'));
     });
     lines.push(LAB.message + '：');
-    lines.push(val('message'));
+    lines.push(val('message') || '記入なし');
     return lines.join('\n');
   }
   function openMail() {
-    var subject = '【ご相談】' + val('type') + '／' + val('name') + ' 様';
+    var subject = '【ご相談】' + val('name') + ' 様';
     var text = mailText();
     var url = 'mailto:' + MAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text.replace(/\n/g, '\r\n'));
     d.getElementById('cf-mailto').href = url;
