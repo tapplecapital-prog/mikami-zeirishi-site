@@ -240,7 +240,7 @@ a.cd:hover{transform:translateY(-3px);border-color:rgba(29,78,158,.4);box-shadow
 .fc h4{font:600 13px var(--mincho);letter-spacing:.1em;color:var(--navy);padding-bottom:8px;margin-bottom:6px;border-bottom:1px solid var(--line)}
 .fc li a{display:block;padding:4px 0;font-size:12.5px;line-height:1.6}.fc li a:hover{color:var(--deep)}
 .ft-note{margin-top:26px;padding:14px 18px;border-radius:14px;background:var(--tint);font-size:12.5px;line-height:1.85;color:var(--ink)}
-.ft-bot{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);display:flex;gap:8px 22px;flex-wrap:wrap;font-size:12px;color:var(--mute)}.ft-bot .reg{margin-right:auto}
+.ft-bot{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);display:flex;gap:8px 22px;flex-wrap:wrap;font-size:12px;color:var(--mute)}.ft-bot>span{margin-left:auto}
 .ft-bot a{text-decoration:underline;text-decoration-color:transparent;text-underline-offset:4px}.ft-bot a:hover{text-decoration-color:currentColor}
 .fixcta{display:none}
 /* motion */
@@ -290,3 +290,17 @@ a.cd:hover{transform:translateY(-3px);border-color:rgba(29,78,158,.4);box-shadow
  .cta-row .btn{width:100%;justify-content:center}
  .tw.hm3 th:nth-child(3),.tw.hm3 td:nth-child(3),.tw.hm5 th:nth-child(5),.tw.hm5 td:nth-child(5){display:none}
  .tw.ns td{white-space:nowrap}.tw.ns td:first-child{width:auto}}
+
+/* 相談・お見積りの入口（2026-11-03）。ヘッダー・スマホの固定ボタン・案内帯のボタンは1種類だけ */
+.ctas{gap:10px 12px}
+@media (max-width:640px){
+ .fixcta .btn{min-height:48px}}
+
+/* 料金表の行ごとの申込みリンク（2026-11-03）。表の最後の列。スマートフォンでは行ごとに縦に並び、リンクは行の幅いっぱいの押しやすい大きさにする */
+.tw td.rl{white-space:nowrap}
+.tw td.rl a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:99px;border:1px solid var(--navy);color:var(--navy);font:500 13px/1.4 var(--sans);letter-spacing:.04em;transition:background .25s,color .25s}
+.tw td.rl a:hover,.tw td.rl a:focus-visible{background:var(--navy);color:#fff}
+@media (max-width:640px){
+ .tw.st td.rl::before{display:none}
+ .tw.st td.rl{padding:6px 12px 4px}
+ .tw.st td.rl a{display:flex;width:100%}}

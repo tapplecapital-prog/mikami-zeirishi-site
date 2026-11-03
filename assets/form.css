@@ -34,7 +34,7 @@
 .cf .chip input,.cf .chk input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:1}
 .cf .chip>span{display:flex;flex-direction:column;justify-content:center;gap:1px;min-height:54px;height:100%;padding:9px 12px 9px 42px;position:relative;
  border-radius:14px;background:#fff;border:1px solid var(--fbd);transition:border-color .15s,background .15s,box-shadow .15s}
-.cf .chip>span::before{content:"";position:absolute;left:14px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;border:1.5px solid rgba(29,78,158,.55);background:#fff;transition:border-width .15s,border-color .15s}
+.cf .chip>span::before{content:"";box-sizing:border-box;position:absolute;left:14px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;border:1.5px solid rgba(29,78,158,.55);background:#fff;transition:border-width .15s,border-color .15s}
 .cf .chip b{font:500 14.5px/1.5 var(--sans);color:var(--ink)}
 .cf .chip small{font-size:11.5px;line-height:1.5;color:var(--mute)}
 .cf .chip:hover span{border-color:rgba(29,78,158,.6)}
@@ -115,3 +115,19 @@ html:not(.js) .cf-form.is-mail{display:none}
 
 /* 送信ボタンの下の一文（簡素化後） */
 .cf .cf-sub{margin:-14px 0 0;font-size:13px;line-height:1.8;color:var(--mute)}
+
+/* ご用件・状況・お返事の方法（2026-11-03。札の並びは .kinds、状況の囲みは .qbox） */
+.cf .kinds .chip>span{min-height:64px}
+.cf .qbox{display:grid;gap:18px;padding:20px 18px;border-radius:18px;background:rgba(238,244,253,.6);border:1px solid var(--line)}
+.cf .qbox .hint{margin:-8px 0 0}
+.cf .sub{margin:0;padding:0;border:0;min-width:0}
+.cf .sub>legend{padding:0;margin:0 0 8px;font:500 14px/1.6 var(--sans);color:var(--navy)}
+.cf .nums{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:12px}
+.cf .est{padding:16px 18px;border-radius:14px;background:#fff;border:1px solid var(--navy)}
+.cf .est-h{margin:0 0 6px;font:600 14px/1.6 var(--mincho);color:var(--navy);letter-spacing:.06em}
+.cf .est output{display:block}
+.cf .est output p{margin:2px 0;font-size:15px;line-height:1.8;color:var(--ink)}
+.cf .est output b{display:inline-block;min-width:8.5em;font-weight:500;color:var(--navy)}
+.cf .est output .note{font-size:13px;color:var(--mute)}
+@media (max-width:640px){.cf .qbox{padding:16px 12px}}
+@media (max-width:480px){.cf .chips.kinds{grid-template-columns:minmax(0,1fr)}.cf .kinds .chip>span{min-height:58px}}
