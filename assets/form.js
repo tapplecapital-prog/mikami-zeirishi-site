@@ -68,6 +68,11 @@
 
   function nfkc(s) { s = String(s || ''); return s.normalize ? s.normalize('NFKC') : s; }
   function el(name) { return f.elements[name]; }
+  // 最初に開いたページ・直前のサイト・utm_source（各ページの head の小さなスクリプトが sessionStorage に入れたもの）
+  function firstTouch() {
+    try { var o = JSON.parse(sessionStorage.getItem('ft') || 'null'); if (o) return { utm: o.u || '', fref: o.r || '', land: o.l || '' }; } catch (e) { }
+    return { utm: '', fref: '', land: '' };
+  }
   function val(k) {
     var x = el(k);
     if (!x) return '';
@@ -346,6 +351,8 @@
     body.append('via', 'js');
     body.append('page', location.href.slice(0, 300));
     body.append('ref', (d.referrer || '').slice(0, 300));
+    var ft = firstTouch();
+    body.append('utm', ft.utm); body.append('fref', ft.fref); body.append('land', ft.land);
     busy(true);
     setStatus('送信しています。', false);
     var ctl = window.AbortController ? new AbortController() : null;
@@ -379,6 +386,8 @@
     el('el').value = String(Math.round((Date.now() - t0) / 1000));
     el('page').value = location.href.slice(0, 300);
     el('ref').value = (d.referrer || '').slice(0, 300);
+    var ft = firstTouch();
+    if (el('utm')) { el('utm').value = ft.utm; el('fref').value = ft.fref; el('land').value = ft.land; }
     HTMLFormElement.prototype.submit.call(f);
   }
 
