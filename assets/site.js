@@ -31,3 +31,7 @@ if(links.length&&'IntersectionObserver' in window){
  Object.keys(map).forEach(function(id){var el=d.getElementById(id);if(el)so.observe(el)});
 }
 })();
+/* 期限つきの表示（「NEW」の印・トップの季節の案内）：data-until の日を過ぎたら隠す。生成し直さなくても古い表示が残らないようにする */
+(function(){var t=new Date(),k=t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2);
+ document.querySelectorAll('[data-until]').forEach(function(el){var u=el.getAttribute('data-until');if(!u)return;
+  if(el.classList.contains('new')?k>=u:k>u)el.hidden=true})})();

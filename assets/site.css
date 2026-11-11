@@ -304,3 +304,19 @@ a.cd:hover{transform:translateY(-3px);border-color:rgba(29,78,158,.4);box-shadow
  .tw.st td.rl::before{display:none}
  .tw.st td.rl{padding:6px 12px 4px}
  .tw.st td.rl a{display:flex;width:100%}}
+/* トップの季節の案内（令和8年分の確定申告など）と「NEW」の印 */
+.hn{margin-top:22px;display:inline-grid;grid-template-columns:auto minmax(0,1fr) 20px;align-items:center;gap:14px;min-height:56px;padding:10px 18px 10px 10px;max-width:100%;border-radius:16px;background:var(--navy);color:#fff;box-shadow:0 18px 34px -20px rgba(20,48,106,.8);transition:transform .2s,box-shadow .2s}
+.hn:hover{transform:translateY(-2px);box-shadow:0 22px 38px -20px rgba(20,48,106,.9)}
+.hn:focus-visible{outline:3px solid var(--apple);outline-offset:3px}
+.hn-b{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:10px;background:#fff;color:var(--navy);font:700 13px/1 var(--sans);letter-spacing:.06em;white-space:nowrap}
+.hn-b::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--apple)}
+.hn-t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.hn-t b{font:700 clamp(15px,1.4vw,17px)/1.4 var(--mincho);letter-spacing:.06em}
+.hn-t small{font-size:12.5px;line-height:1.5;color:#D6E3F7}
+.hn .ar{color:#fff;transition:transform .2s}.hn:hover .ar{transform:translateX(4px)}
+.new{display:inline-block;margin:0 8px 0 0;padding:3px 7px;border-radius:6px;background:#C42E4E;color:#fff;font:700 10.5px/1 var(--en);letter-spacing:.12em;vertical-align:2px}
+.cd small .new{margin:0 0 0 4px;vertical-align:0}
+.news b .new{display:inline-block;font-size:10.5px;line-height:1;color:#fff}
+.upd{font-size:13px;color:var(--mute)}.upd time{color:var(--navy);font-weight:500}
+@media (max-width:640px){.hn{display:grid;padding:10px 14px 10px 10px;gap:10px}.hn-t small{font-size:12px}}
+@media (prefers-reduced-motion:reduce){.hn,.hn .ar{transition:none}.hn:hover{transform:none}}
