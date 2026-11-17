@@ -284,6 +284,42 @@
   })();
   applyState();
 
+  // 試算ページから移ったときだけ要約を読み、記入済みの文章は保つ。
+  if (window.URLSearchParams && new URLSearchParams(location.search).get('from') === 'valuation') {
+    var summary = '';
+    try {
+      summary = sessionStorage.getItem('valuation-consultation') || '';
+      sessionStorage.removeItem('valuation-consultation');
+    } catch (error) { /* 保存を許可していないブラウザでは通常のフォームを使う */ }
+    if (summary && summary.length <= msg.maxLength && !msg.value.trim()) {
+      msg.value = summary;
+      count();
+      save();
+    } else if (summary && summary.length <= msg.maxLength) {
+      var importBox = d.createElement('div');
+      var importButton = d.createElement('button');
+      var importStatus = d.createElement('p');
+      importButton.type = 'button';
+      importButton.className = 'btn line';
+      importButton.textContent = '試算結果を書きかけの相談に追記';
+      importStatus.setAttribute('role', 'status');
+      importButton.addEventListener('click', function () {
+        var merged = [msg.value.trimEnd(), summary].filter(Boolean).join('\n\n');
+        if (merged.length > msg.maxLength) {
+          importStatus.textContent = '追記すると2,000文字を超えます。相談欄を短くしてから追記してください。';
+          return;
+        }
+        msg.value = merged;
+        count();
+        save();
+        msg.focus();
+        importBox.remove();
+      });
+      importBox.append(importButton, importStatus);
+      msg.after(importBox);
+    }
+  }
+
   // 確認の画面
   function openConfirm() {
     dl.innerHTML = '';
